@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Corben:wght@400;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 0;
+    background: linear-gradient(45deg, #30f4d0, #009dff);
+}
+
+.wrapper {
+    display: flex;
+}
+
+::selection {
+    color: black;
+    background: white;
+}
+
+.currency {
+    padding: 30px;
+    border-radius: 10px;
+    background-color: #000000;
+    box-shadow: 7px 7px 20px #19016f;
+    color: white;
+}
+
+.wrapper .currency h4{
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+
+}
+
+.currency form{
+    margin: 40px 0 20px 0;
+}
+
+form :where(input, select, button){
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: dimgrey;
+    color: white;
+}
+
+form p{
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+form input{
+    height: 24px;
+    font-size: 12px;
+    padding-left: 10px;
+    border: 1px solid #b1adad;
+    background: dimgrey;
+}
+
+form input:focus{
+    padding: 0 5px;
+    border: 2px solid #20209a;
+    background: dimgrey;
+}
+
+form .drop-list{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drop-list .select-box{
+    display: flex;
+    width: 100px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #c8c8c8;
+    border-radius: 8px;
+    background: #f6f4eb;
+    color: black;
+}
+
+.select-box img{
+    max-width: 20px;
+    max-height: 16px;
+}
+
+.select-box select{
+    width: auto;
+    font-size: 16px;
+    background: none;
+    margin: 0 -5px 0 5px;
+    color: black;
+}
+
+.select-box select::-webkit-scrollbar{
+    width: 8px;
+
+}
+
+.select-box select::-webkit-scrollbar-track{
+    background-color: white;
+}
+
+.select-box select::-webkit-scrollbar-thumb{
+    background-color: dimgrey;
+    border-radius: 8px;
+    border-right: 2px solid #c8c8c8;
+}
+
+.drop-list .icon{
+    cursor: pointer;
+    margin-top: 30px;
+    font-size: 22px;
+    color: white;
+}
+
+form .exchange-rate{
+    font-size: 18px;
+    margin: 20px 0 30px;
+}
+
+form button{
+    height: 52px;
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: #5382cc;
+}
+
+form button:hover{
+    background: white;
+    color: black;
+    transform: scale(1.01);
+}
+
+form button:active{
+    transform: scale(1.01);
+}
+
+/*weather*/
+
+.weather-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 10px;
+    color: #3e3e3e;
+    font: 14px "Poppins", sans-serif;
+    background-color: #dfdead;
+    border-radius: 10px;
+    margin: 20px;
+    box-shadow: 4px 4px 10px #240643;
+}
+
+.weather-header h3{
+    margin: 15px 0;
+    font-size: 28px;
+}
+
+.weather-header form{
+    display: flex;
+    gap: 4px;
+}
+
+.weather-header form input{
+    width: 75%;
+    padding: 5px;
+    outline: none;
+    border: 1px solid #5a2c00;
+    border-radius: 4px;
+    font: 18px "Poppins", sans-serif;
+    background-color: #d6d2d8;
+}
+
+.weather-header form button {
+    width: 25%;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff7100;
+    cursor: pointer;
+    color: #000000;
+    max-height: 36px;
+    transition: .4s;
+}
+
+.weather-header form button:hover{
+    background-color: #e1bff6;
+    color: #ff7100;
+    border: 1px solid #ff7100;
+}
+
+.weather {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 310px;
+    height: 150px;
+    margin: 15px;
+    padding: 15px;
+    border: 1px solid #ff7100;
+    border-radius: 4px;
+    box-shadow: 7px 7px 10px #20209a;
+    background-color: #64eddd;
+}
+
+.city {
+    overflow: hidden;
+    width: 180px;
+    font-size: 38px;
+    margin-bottom: 15px;
+    font-weight: 900;
+    color: #ff7100;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+span {
+    display: block;
+    margin-top: 5px;
+}
+
+span b{
+    color: #ff7100 ;
+}
+
+.right{
+    position: relative;
+    padding-top: 70px;
+}
+
+.weather  .right img {
+    position: absolute;
+    right: 0;
+    top: -15px;
+    width: 80px;
+    height: 80px;
+}
+
+.temp {
+    font-size: 38px;
+    font-weight: 900;
+    color: #3711a1;
+    text-align: right;
+}
+
+

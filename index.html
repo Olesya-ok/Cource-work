@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css"
+          integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+
+
+</header>
+
+<main>
+    <div class="wrapper">
+        <div class="weather-header">
+            <h3 class="title">Прогноз погоди</h3>
+            <form id="weatherAll">
+                <input id="weather-input" placeholder="Введіть ваше місто...">
+                <button> Запит</button>
+            </form>
+
+            <div class="weather">
+
+            </div>
+
+        </div>
+
+        <div class="currency">
+            <h4>Конвертер валют</h4>
+            <form>
+                <div class="amount">
+                    <p>Enter amount</p>
+                    <input id="currency-input" value="1">
+                </div>
+                <div class="drop-list">
+                    <div class="form">
+                        <p>Form</p>
+                        <div class="select-box">
+                            <img src="https://flagcdn.com/48x36/ca.png" alt="flag">
+                            <select>
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-exchange-alt"></i>
+
+                    </div>
+                    <div class="to">
+                        <p>To</p>
+                        <div class="select-box">
+                            <img src="https://flagcdn.com/48x36/us.png" alt="flag">
+                            <select>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="exchange-rate">
+                    Getting exchange rate...
+                </div>
+                <button class="currency-btn">Get exchange</button>
+
+
+            </form>
+
+        </div>
+
+    </div>
+</main>
+
+<footer>
+
+</footer>
+
+<script src="weather.js"></script>
+<script src="currency.js"></script>
+
+</body>
+</html>
