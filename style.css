@@ -3,20 +3,30 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
 
 body {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     min-height: 100vh;
-    padding: 0;
-    background: linear-gradient(45deg, #30f4d0, #009dff);
+    padding: 0 15px;
+    background-image: url("images/weather-foto/depositphotos_61868743-stock-photo-weather-forecast-concept.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .wrapper {
     display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
 }
 
 ::selection {
@@ -24,235 +34,246 @@ body {
     background: white;
 }
 
-.currency {
-    padding: 30px;
-    border-radius: 10px;
-    background-color: #000000;
-    box-shadow: 7px 7px 20px #19016f;
-    color: white;
-}
-
-.wrapper .currency h4{
-    font-size: 20px;
-    font-weight: 600;
-    text-align: center;
-
-}
-
-.currency form{
-    margin: 40px 0 20px 0;
-}
-
-form :where(input, select, button){
-    width: 100%;
-    outline: none;
-    border-radius: 5px;
-    border: none;
-    background: dimgrey;
-    color: white;
-}
-
-form p{
-    font-size: 18px;
-    margin-bottom: 5px;
-}
-
-form input{
-    height: 24px;
-    font-size: 12px;
-    padding-left: 10px;
-    border: 1px solid #b1adad;
-    background: dimgrey;
-}
-
-form input:focus{
-    padding: 0 5px;
-    border: 2px solid #20209a;
-    background: dimgrey;
-}
-
-form .drop-list{
-    display: flex;
-    margin-top: 20px;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.drop-list .select-box{
-    display: flex;
-    width: 100px;
-    height: 36px;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #c8c8c8;
-    border-radius: 8px;
-    background: #f6f4eb;
-    color: black;
-}
-
-.select-box img{
-    max-width: 20px;
-    max-height: 16px;
-}
-
-.select-box select{
-    width: auto;
-    font-size: 16px;
-    background: none;
-    margin: 0 -5px 0 5px;
-    color: black;
-}
-
-.select-box select::-webkit-scrollbar{
-    width: 8px;
-
-}
-
-.select-box select::-webkit-scrollbar-track{
-    background-color: white;
-}
-
-.select-box select::-webkit-scrollbar-thumb{
-    background-color: dimgrey;
-    border-radius: 8px;
-    border-right: 2px solid #c8c8c8;
-}
-
-.drop-list .icon{
-    cursor: pointer;
-    margin-top: 30px;
-    font-size: 22px;
-    color: white;
-}
-
-form .exchange-rate{
-    font-size: 18px;
-    margin: 20px 0 30px;
-}
-
-form button{
-    height: 52px;
-    color: black;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    background: #5382cc;
-}
-
-form button:hover{
-    background: white;
-    color: black;
-    transform: scale(1.01);
-}
-
-form button:active{
-    transform: scale(1.01);
-}
-
-/*weather*/
-
 .weather-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0 10px;
-    color: #3e3e3e;
-    font: 14px "Poppins", sans-serif;
-    background-color: #dfdead;
+    padding: 20px;
+    color: #fff7f7;
+    font-size: 14px;
+    background-color: rgba(26, 26, 85, 0.8);
     border-radius: 10px;
     margin: 20px;
     box-shadow: 4px 4px 10px #240643;
 }
 
-.weather-header h3{
+.weather-header h3 {
     margin: 15px 0;
     font-size: 28px;
+    text-align: center;
 }
 
-.weather-header form{
+.weather-header form {
     display: flex;
-    gap: 4px;
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
 }
 
-.weather-header form input{
-    width: 75%;
-    padding: 5px;
+.weather-header form input {
+    flex: 3;
+    padding: 10px;
     outline: none;
-    border: 1px solid #5a2c00;
+    border: 1px solid #00d6dd;
     border-radius: 4px;
-    font: 18px "Poppins", sans-serif;
-    background-color: #d6d2d8;
+    background-color: #ffffff;
+    font-size: 16px;
 }
 
 .weather-header form button {
-    width: 25%;
+    flex: 1;
     border: none;
     border-radius: 4px;
-    background-color: #ff7100;
+    background-color: #a8c8ef;
     cursor: pointer;
     color: #000000;
-    max-height: 36px;
-    transition: .4s;
+    transition: all 0.4s;
 }
 
-.weather-header form button:hover{
-    background-color: #e1bff6;
-    color: #ff7100;
-    border: 1px solid #ff7100;
+.weather-header form button:hover {
+    background-color: #000000;
+    color: #a8c8ef;
+    border: 1px solid #a8c8ef;
 }
 
+/* Weather Details */
 .weather {
+    display: grid;
+    gap: 20px;
+    padding: 10px;
+    grid-template-columns: repeat(2, 170px);
+    grid-template-rows: repeat(2, 170px);
+}
+
+.header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+}
+
+.cityName {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     gap: 8px;
-    width: 310px;
-    height: 150px;
-    margin: 15px;
-    padding: 15px;
-    border: 1px solid #ff7100;
-    border-radius: 4px;
-    box-shadow: 7px 7px 10px #20209a;
-    background-color: #64eddd;
+    font-size: 80px;
+    font-weight: bold;
+    color: #a8c8ef;
 }
 
-.city {
-    overflow: hidden;
-    width: 180px;
-    font-size: 38px;
-    margin-bottom: 15px;
-    font-weight: 900;
-    color: #ff7100;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.weather-icon {
+    width: 150px;
+    height: 100px;
+    object-fit: contain;
 }
 
-span {
+.weather-days {
+    background: none;
+}
+
+.temp, .humidity, .windSpeed, .compass {
+    border: 1px solid #040419;
+    background-color: rgba(47, 47, 128, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+}
+
+.sunriseTime, .sunsetTime {
+    margin-top: 16px;
+    margin-bottom: 10px;
+}
+
+.humidityP, .windSpeedP {
+    margin-top: 40px;
+}
+
+.temperature {
+    margin-top: 40px;
+}
+
+.date-time {
+    font-size: 18px;
+    color: #a8c8ef;
     display: block;
-    margin-top: 5px;
 }
 
-span b{
-    color: #ff7100 ;
+.weather .wind,
+.weather .compass {
+    text-align: center;
 }
 
-.right{
-    position: relative;
-    padding-top: 70px;
+.weather .wind img,
+.weather .compass img {
+    display: block;
+    margin: 0 auto;
 }
 
-.weather  .right img {
-    position: absolute;
+.modal-overlay.active {
+    display: block;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
     right: 0;
-    top: -15px;
+    width: 400px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    display: none;
+    z-index: 1000;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.modal-overlay.show {
+    display: block;
+    animation: slide-in 0.3s ease-out; /* Анимация появления */
+}
+
+/* Анимация для плавного появления справа */
+@keyframes slide-in {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.modal-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    z-index: 1100;
+}
+
+.weather-hidden {
+    display: none;
+}
+
+.forecast-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.forecast-day {
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.forecast-day img {
+    max-width: 50px;
+    margin-bottom: 10px;
+}
+
+.forecast-day p {
+    margin: 5px 0;
+}
+
+.forecast-container h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Button Container */
+.button-container {
+    position: relative;
+}
+
+.hourly-weather {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.hour-weather {
     width: 80px;
-    height: 80px;
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 5px;
+    border-radius: 5px;
 }
 
-.temp {
-    font-size: 38px;
-    font-weight: 900;
-    color: #3711a1;
-    text-align: right;
+.weather-icon {
+    width: 40px;
+    height: 40px;
 }
-
-

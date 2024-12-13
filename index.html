@@ -12,77 +12,67 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="wrapper">
+    <div class="weather-header">
+        <div class="header">
 
-<header>
+            <div class="date-time"></div>
 
+            <div class="weather-for-days">
+                <button class="weather-days"><img src="images/weather-icon/load-lines.png" alt="weather icon"></button>
+            </div>
+        </div>
 
-</header>
-
-<main>
-    <div class="wrapper">
-        <div class="weather-header">
-            <h3 class="title">Прогноз погоди</h3>
-            <form id="weatherAll">
-                <input id="weather-input" placeholder="Введіть ваше місто...">
-                <button> Запит</button>
-            </form>
-
-            <div class="weather">
-
+        <div id="modalOverlay" class="modal-overlay">
+            <div class="modal-content">
+                <span id="closeButton" class="close-button">&times;</span>
+                <div class="weather"></div>
+                <div class="forecast-container"></div>
             </div>
 
         </div>
 
-        <div class="currency">
-            <h4>Конвертер валют</h4>
-            <form>
-                <div class="amount">
-                    <p>Enter amount</p>
-                    <input id="currency-input" value="1">
-                </div>
-                <div class="drop-list">
-                    <div class="form">
-                        <p>Form</p>
-                        <div class="select-box">
-                            <img src="https://flagcdn.com/48x36/ca.png" alt="flag">
-                            <select>
+        <h3 class="title">Прогноз погоди</h3>
 
-                            </select>
-                        </div>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-exchange-alt"></i>
+        <form id="weatherAll">
+            <input type="text" id="weather-input" placeholder="Введіть місто">
+            <button type="submit">Отримати погоду</button>
+        </form>
 
-                    </div>
-                    <div class="to">
-                        <p>To</p>
-                        <div class="select-box">
-                            <img src="https://flagcdn.com/48x36/us.png" alt="flag">
-                            <select>
+        <div class="cityName"></div>
 
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="exchange-rate">
-                    Getting exchange rate...
-                </div>
-                <button class="currency-btn">Get exchange</button>
-
-
-            </form>
-
+        <div class="hourly-weather">
+            <h2></h2>
         </div>
 
+        <div class="weather">
+            <div class="temp">
+                <img src="images/weather-icon/weather_15458099.png" alt="weather">
+                <div class="temperature">
+                    <p class="temp_min">min-temp - 10</p>
+                    <p class="temp_max">max-temp - 20</p>
+                </div>
+            </div>
+
+            <div class="humidity">
+                <img src="images/weather-icon/free-icon-humidity-2828802.png" alt="humidity">
+            </div>
+
+            <div class="windSpeed">
+                <img src="images/weather-icon/weather_16279006.png" alt="wind">
+                <p>Ветер: 5 m/s</p>
+            </div>
+
+            <div class="compass">
+                <img src="images/weather-icon/free-icon-sunrise-5370627.png" alt="">
+                <p class="sunriseTime"></p>
+                <img src="images/weather-icon/free-icon-sunset-2443647.png" alt="">
+                <p class="sunsetTime"></p>
+
+            </div>
+        </div>
     </div>
-</main>
-
-<footer>
-
-</footer>
-
+</div>
 <script src="weather.js"></script>
-<script src="currency.js"></script>
-
 </body>
 </html>
