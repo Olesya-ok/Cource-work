@@ -1,5 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
-
+let initProject = function () {
     function formatDate(date) {
         const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
         return new Intl.DateTimeFormat('uk-UA', options).format(date);
@@ -19,32 +18,52 @@ document.addEventListener("DOMContentLoaded", function () {
     const weatherDiv = document.querySelector('.weather');
     const weatherDaysButton = document.querySelector('.weather-days');
 
-    weatherDaysButton.addEventListener('click', async () => {
-        const city = document.querySelector('#weather-input').value.trim() || 'Kyiv';
-        await getData(city, true); // показуємо прогноз у модальному вікні
-        modalOverlay.classList.add('show');
-        weatherDiv.classList.add('weather-hidden');
-    });
+    if (weatherDaysButton) {
+        weatherDaysButton.addEventListener('click', async () => {
+            const city = document.querySelector('#weather-input').value.trim() || 'Nikopol\'';
+            await getData(city, true); // показуємо прогноз у модальному вікні
+            modalOverlay.classList.add('show');
+            weatherDiv.classList.add('weather-hidden');
+        });
+    } else {
+        console.error('Елемент .weather-days не знайдено!');
+    }
 
-    closeButton.addEventListener('click', () => {
-        modalOverlay.classList.remove('show');
-        weatherDiv.classList.add('weather-hidden');
-    });
-
-    modalOverlay.addEventListener('click', (e) => {
-        if (e.target === modalOverlay) {
+    if (closeButton) {
+        closeButton.addEventListener('click', () => {
             modalOverlay.classList.remove('show');
-        }
-    });
+            weatherDiv.classList.add('weather-hidden');
+        });
+    } else {
+        console.error('Кнопка закриття модального вікна не знайдена!');
+    }
 
-    document.querySelector('#weatherAll').addEventListener('submit', e => {
-        e.preventDefault();
-        const input = document.querySelector('#weather-input');
-        getData(input.value.trim());
-    });
+    if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                modalOverlay.classList.remove('show');
+            }
+        });
+    } else {
+        console.error('Модальне вікно не знайдено!');
+    }
 
-    getData('Nikopol\'');
-});
+    const weatherForm = document.querySelector('#weatherAll');
+    if (weatherForm) {
+        weatherForm.addEventListener('submit', e => {
+            e.preventDefault();
+            const input = document.querySelector('#weather-input');
+            getData(input.value.trim());
+        });
+    } else {
+        console.error('Форма для пошуку погоди не знайдена!');
+    }
+
+    getData("Nikopol'");
+};
+
+document.addEventListener("DOMContentLoaded", initProject);
+
 
 // Отримання даних про погоду
 async function getData(city, isModal = false) {
@@ -73,24 +92,43 @@ async function getData(city, isModal = false) {
     }
 }
 
+function getWeatherIcon(weatherCode) {
+    switch (weatherCode) {
+        case '01d':
+            return 'images/weather-icon/clear-sky.png';
+        case '01n':
+            return 'images/weather-icon/clear-sky-night.png';
+        case '02d':
+            return 'images/weather-icon/few-clouds.png';
+        case '02n':
+            return 'images/weather-icon/few-clouds-night.png';
+        case '03d':
+        case '03n':
+        case '04d':
+        case '04n':
+            return 'images/weather-icon/scattered-clouds.png';
+        case '09d':
+        case '09n':
+            return 'images/weather-icon/shower-rain.png';
+        case '10d':
+            return 'images/weather-icon/rain.png';
+        case '10n':
+            return 'images/weather-icon/rain-night.png';
+        case '11d':
+        case '11n':
+            return 'images/weather-icon/thunderstorm.png';
+        case '13d':
+        case '13n':
+            return 'images/weather-icon/snow.png';
+        case '50d':
+        case '50n':
+            return 'images/weather-icon/mist.png';
+        default:
+            console.warn(`Невідомий код погоди: ${weatherCode}`);
+            return `https://openweathermap.org/img/wn/${weatherCode}.png`; // Значение по умолчанию
+    }
+}
 
-const weatherIcons = {
-    '01d': 'images/weather-icon/clear-sky.png',
-    '01n': 'images/weather-icon/clear-sky-night.png',
-    '02d': 'images/weather-icon/few-clouds.png',
-    '03d': 'images/weather-icon/scattered-clouds.png',
-    '03n': 'images/weather-icon/scattered-clouds.png',
-    '04d': 'images/weather-icon/scattered-clouds.png',
-    '04n': 'images/weather-icon/scattered-clouds.png',
-    '09d': 'images/weather-icon/shower-rain.png',
-    '09n': 'images/weather-icon/shower-rain.png',
-    '10d': 'images/weather-icon/rain.png',
-    '10n': 'images/weather-icon/rain.png',
-    '11d': 'images/weather-icon/thunderstorm.png',
-    '11n': 'images/weather-icon/thunderstorm.png',
-    '13d': 'images/weather-icon/snow.png',
-    '13n': 'images/weather-icon/snow.png',
-};
 
 function createWeather(data) {
     const cityName = data.city.name;
@@ -99,6 +137,7 @@ function createWeather(data) {
     if (weatherContainer) {
         weatherContainer.innerHTML = '';
 
+        // Заголовок города
         const cityHeader = document.createElement('h3');
         cityHeader.textContent = `Прогноз погоди для ${cityName}`;
         weatherContainer.appendChild(cityHeader);
@@ -107,40 +146,77 @@ function createWeather(data) {
         const temp = Math.round(currentWeather.main.temp);
         const weatherCode = currentWeather.weather[0].icon;
         const weatherDescription = currentWeather.weather[0].description;
-        const weatherIcon = weatherIcons[weatherCode] || `https://openweathermap.org/img/wn/${weatherCode}.png`;
+        const weatherIcon = getWeatherIcon(weatherCode);
 
+        // Элемент с названием города и иконкой погоды
         const cityNameElement = document.querySelector('.cityName');
         if (cityNameElement) {
-            cityNameElement.innerHTML = `  
-                <img src="${weatherIcon}" alt="${weatherDescription}" class="weather-icon">
-                <p>${cityName}</p>
-            `;
+            cityNameElement.innerHTML = '';
+
+            const imgElement = document.createElement('img');
+            imgElement.src = weatherIcon;
+            imgElement.alt = weatherDescription;
+            imgElement.classList.add('weather-icon');
+
+            const cityNameText = document.createElement('p');
+            cityNameText.textContent = cityName;
+
+            cityNameElement.appendChild(imgElement);
+            cityNameElement.appendChild(cityNameText);
         }
 
+        // Элемент с температурой
         const tempElement = document.querySelector('.temp .temperature');
         if (tempElement) {
-            tempElement.innerHTML = `
-                <p class="temp_min">Мін. температура: ${Math.round(currentWeather.main.temp_min)}℃</p>
-                <p class="temp_max">Макс. температура: ${Math.round(currentWeather.main.temp_max)}℃</p>
-            `;
+            tempElement.innerHTML = '';
+
+            const tempMin = document.createElement('p');
+            tempMin.classList.add('temp_min');
+            tempMin.textContent = `Мін. температура: ${Math.round(currentWeather.main.temp_min)}℃`;
+
+            const tempMax = document.createElement('p');
+            tempMax.classList.add('temp_max');
+            tempMax.textContent = `Макс. температура: ${Math.round(currentWeather.main.temp_max)}℃`;
+
+            tempElement.appendChild(tempMin);
+            tempElement.appendChild(tempMax);
         }
 
+        // Элемент с влажностью
         const humidityElement = document.querySelector('.humidity');
         if (humidityElement) {
-            humidityElement.innerHTML = `
-                <img src="images/weather-icon/free-icon-humidity-2828802.png" alt="humidity">
-                <p class="humidityP">Вологість: ${currentWeather.main.humidity}%</p>
-            `;
+            humidityElement.innerHTML = '';
+
+            const imgElement = document.createElement('img');
+            imgElement.src = 'images/weather-icon/free-icon-humidity-2828802.png';
+            imgElement.alt = 'humidity';
+
+            const humidityText = document.createElement('p');
+            humidityText.classList.add('humidityP');
+            humidityText.textContent = `Вологість: ${currentWeather.main.humidity}%`;
+
+            humidityElement.appendChild(imgElement);
+            humidityElement.appendChild(humidityText);
         }
 
+        // Элемент со скоростью ветра
         const windSpeedElement = document.querySelector('.windSpeed');
         if (windSpeedElement) {
-            windSpeedElement.innerHTML = `
-                <img src="images/weather-icon/weather_16279006.png" alt="wind">
-                <p class="windSpeedP">Вітер: ${Math.round(currentWeather.wind.speed)} м/с</p>
-            `;
+            windSpeedElement.innerHTML = '';
+
+            const imgElement = document.createElement('img');
+            imgElement.src = 'images/weather-icon/weather_16279006.png';
+            imgElement.alt = 'wind';
+
+            const windSpeedText = document.createElement('p');
+            windSpeedText.classList.add('windSpeedP');
+            windSpeedText.textContent = `Вітер: ${Math.round(currentWeather.wind.speed)} м/с`;
+
+            windSpeedElement.appendChild(imgElement);
+            windSpeedElement.appendChild(windSpeedText);
         }
 
+        // Элементы восхода и заката
         const sunriseTimestamp = data.city.sunrise;
         const sunsetTimestamp = data.city.sunset;
 
@@ -149,12 +225,28 @@ function createWeather(data) {
 
         const compassElement = document.querySelector('.compass');
         if (compassElement) {
-            compassElement.innerHTML = `
-                <img src="images/weather-icon/free-icon-sunrise-5370627.png" alt="sunrise">
-                <p class="sunriseTime">Схід сонця: ${sunriseTime}</p>
-                <img src="images/weather-icon/free-icon-sunset-2443647.png" alt="sunset">
-                <p class="sunsetTime">Захід сонця: ${sunsetTime}</p>
-            `;
+            compassElement.innerHTML = '';
+
+            const sunriseImg = document.createElement('img');
+            sunriseImg.src = 'images/weather-icon/free-icon-sunrise-5370627.png';
+            sunriseImg.alt = 'sunrise';
+
+            const sunriseText = document.createElement('p');
+            sunriseText.classList.add('sunriseTime');
+            sunriseText.textContent = `Схід сонця: ${sunriseTime}`;
+
+            const sunsetImg = document.createElement('img');
+            sunsetImg.src = 'images/weather-icon/free-icon-sunset-2443647.png';
+            sunsetImg.alt = 'sunset';
+
+            const sunsetText = document.createElement('p');
+            sunsetText.classList.add('sunsetTime');
+            sunsetText.textContent = `Захід сонця: ${sunsetTime}`;
+
+            compassElement.appendChild(sunriseImg);
+            compassElement.appendChild(sunriseText);
+            compassElement.appendChild(sunsetImg);
+            compassElement.appendChild(sunsetText);
         }
     } else {
         console.error('Елемент .weather не знайдено!');
@@ -185,7 +277,7 @@ function createForecast(data) {
             const temp = Math.round(item.main.temp);
             const weatherCode = item.weather[0].icon;
             const weatherDescription = item.weather[0].description;
-            const weatherIcon = weatherIcons[weatherCode] || `https://openweathermap.org/img/wn/${weatherCode}.png`;
+            const weatherIcon = getWeatherIcon(weatherCode);
 
             dailyForecasts.push({
                 date: formattedDate,
@@ -219,6 +311,7 @@ function createForecast(data) {
     });
 }
 
+
 function createHourWeather(data) {
     const hourlyWeather = document.querySelector('.hourly-weather');
 
@@ -227,22 +320,28 @@ function createHourWeather(data) {
         return;
     }
 
+    // Очищаем контейнер перед добавлением новых данных
     hourlyWeather.innerHTML = '';
 
     const hourlyData = data.list;
 
-    console.log('Дані для погод на годину:', hourlyData);
-
     if (!Array.isArray(hourlyData) || hourlyData.length === 0) {
         console.error('Помилка: дані для погод на годину відсутні.');
-        hourlyWeather.innerHTML = '<p>Немає доступних даних для відображення.</p>';
+
+        const noDataElement = document.createElement('p');
+        noDataElement.textContent = 'Немає доступних даних для відображення.';
+        hourlyWeather.appendChild(noDataElement);
+
         return;
     }
 
-    let count = 0;
+    let count = 0; // Лимит количества прогнозов
+
     hourlyData.forEach((hourData, index) => {
+        // Добавляем данные с шагом в 3 часа и ограничиваем до 4 записей
         if (index % 3 === 0 && count < 4) {
             if (hourData && hourData.main && hourData.weather) {
+                // Временная метка и форматирование времени
                 const time = new Date(hourData.dt * 1000);
                 const hours = time.getHours();
                 const minutes = time.getMinutes();
@@ -252,27 +351,45 @@ function createHourWeather(data) {
                 const month = time.getMonth() + 1;
                 const formattedDate = `${day < 10 ? '0' : ''}${day}.${month < 10 ? '0' : ''}${month}`;
 
+                // Температура и описание погоды
                 const temp = Math.round(hourData.main.temp);
                 const weatherCode = hourData.weather[0].icon;
                 const weatherIcon = `https://openweathermap.org/img/wn/${weatherCode}.png`;
                 const weatherDescription = hourData.weather[0].description;
 
-                // Логування для перевірки часу
-                console.log('Час:', formattedTime, 'Дата:', formattedDate);
-
-                // Створюємо елемент для відображення погод на годину
+                // Создаём контейнер для прогноза
                 const hourElement = document.createElement('div');
                 hourElement.classList.add('hour-weather');
 
-                hourElement.innerHTML = `
-                    <p class="time">${formattedTime}</p>
-                    <p class="date">${formattedDate}</p>
-                    <img src="${weatherIcon}" alt="${weatherDescription}" class="weather-icon">
-                    <p class="temp">${temp}℃</p>
-                `;
+                // Элемент времени
+                const timeElement = document.createElement('p');
+                timeElement.classList.add('time');
+                timeElement.textContent = formattedTime;
+                hourElement.appendChild(timeElement);
 
+                // Элемент даты
+                const dateElement = document.createElement('p');
+                dateElement.classList.add('date');
+                dateElement.textContent = formattedDate;
+                hourElement.appendChild(dateElement);
+
+                // Иконка погоды
+                const iconElement = document.createElement('img');
+                iconElement.src = weatherIcon;
+                iconElement.alt = weatherDescription;
+                iconElement.classList.add('weather-icon');
+                hourElement.appendChild(iconElement);
+
+                // Элемент температуры
+                const tempElement = document.createElement('p');
+                tempElement.classList.add('temp');
+                tempElement.textContent = `${temp}℃`;
+                hourElement.appendChild(tempElement);
+
+                // Добавляем готовый элемент в контейнер
                 hourlyWeather.appendChild(hourElement);
-                count++;
+
+                count++; // Увеличиваем счётчик
             } else {
                 console.error('Помилка: Нестача даних для погоди.');
             }
